@@ -23,7 +23,6 @@ const validationSchema = yup.object({
   name: yup.string().min(2).max(32).required('This field is required'),
   number: yup
     .string()
-    .max(15)
     .phone(
       null,
       `Please enter a valid phone number in an international format. Example: +380 50-123-4567`
@@ -32,20 +31,10 @@ const validationSchema = yup.object({
 });
 
 export const App = () => {
-  const [contacts, setContacts] = useState(initialContacts);
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? initialContacts
+  );
   const [filter, setFilter] = useState(initialFilter);
-
-  useEffect(() => {
-    const savedContacts = localStorage.getItem(STORAGE_KEY);
-
-    if (savedContacts !== null) {
-      const parsedContacts = JSON.parse(savedContacts);
-
-      setContacts(parsedContacts);
-    } else {
-      setContacts(initialContacts);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
