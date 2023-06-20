@@ -32,7 +32,7 @@ const validationSchema = yup.object({
 
 export const App = () => {
   const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? initialContacts
+    () => JSON.parse(localStorage.getItem(STORAGE_KEY)) ?? initialContacts
   );
   const [filter, setFilter] = useState(initialFilter);
 
